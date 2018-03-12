@@ -1,0 +1,29 @@
+.body{
+    width: auto;
+    height: auto;
+}
+.row{
+    width: auto;
+    background: linear-gradient(350deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 59%,rgba(0,0,0,.64) 100%);
+}
+.navbar{
+    margin-bottom:0;
+}
+.saying{
+        background: transparent;
+        margin-top:30%;
+    }
+.word {
+    color:white;
+    text-indent: 1em;
+    font-family: 楷体;
+    font-size: 3em;
+    font-weight: bolder;
+}
+.author{
+    font-family: 仿宋;
+    font-size: 2em;
+    font-weight:900;
+    text-align: right;
+
+}
