@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" />
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 
 
@@ -21,8 +22,8 @@
     <![endif]-->
     {% block css %}{% endblock %}
 </head>
-<body style="background-image:url({% block bg_img %}{% endblock %});background-size: cover;">                        <!-- rgba(173,216,230,0.25) -->
-<nav class="navbar navbar-default" style="font-size: 1.2em;border: none;position: fixed; top:0;z-index:100;width:100%;">
+<body style="background-image:url({% block bg_img %}{% endblock %});background-size:auto;background-repeat: no-repeat">                        <!-- rgba(173,216,230,0.25) -->
+<nav class="navbar navbar-default" style="font-size: 1.2em;border: none;width:100%;">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -34,7 +35,7 @@
             </button>
 
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Lyz's Blog</a>
+                <a class="navbar-brand" href="{% url 'index' %}">Lyz's Blog</a>
             </div>
 
         </div>
@@ -45,7 +46,6 @@
                 <li><a href="{% url 'index' %}">主页<span class="sr-only">(current)</span></a></li>
                 <li><a href="{% url 'blog_list' %}">博客列表</a></li>
                 <li><a href="{% url 'Carousel' %}">轮播图</a></li>
-                <li><a href="{% url 'new_index' %}">新主页</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">博客分类 <span class="caret"></span></a>
                     <ul class="dropdown-menu">

@@ -3,7 +3,7 @@ from django.db import models
 class Music(models.Model):
     music_name = models.CharField(max_length=50,verbose_name='歌名')
     music_word = models.CharField(max_length=100,verbose_name='歌词')
-    music_url = models.URLField(max_length=200,verbose_name='歌曲地址')
+    music_id = models.IntegerField(verbose_name='歌曲id',default=0) #网易云的歌曲id
     singer = models.CharField(max_length=50,verbose_name='歌手')
 
     def __str__(self):

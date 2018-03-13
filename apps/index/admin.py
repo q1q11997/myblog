@@ -5,5 +5,5 @@ from apps.index.models import Music
 
 @admin.register(Music)
 class Music(admin.ModelAdmin):
-    list_display = ('music_name','singer','music_word','music_url')
+    list_display = ('music_name','singer','music_word','music_id')
 

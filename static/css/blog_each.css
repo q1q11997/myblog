@@ -1,0 +1,18 @@
+h1.panel-title{
+    font-size: 24px;
+    color: #0d56a6;
+    font-family: inherit;
+    line-height: 1;
+    padding: 1em 0 0.2em 0.5em;
+}
+div.panel-heading ul{
+    list-style-type: none;
+    padding: 1em 0 0 1em;
+}
+div.panel-heading ul li{
+    line-height: 1.5em;
+}
+
+div.panel-body ul{
+    list-style-type: none;
+}

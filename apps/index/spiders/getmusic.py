@@ -32,11 +32,11 @@ class Get_music(object):
 
         }
 
-#        lyric_url = r'http://music.163.com/api/lyric?os=pc&id='+dict['music_id']+'&lv=-1&kv=-1&tv=-1'
+#       lyric_url = r'http://music.163.com/api/lyric?os=pc&id='+dict['music_id']+'&lv=-1&kv=-1&tv=-1'
         new_music = models.Music.objects.create()
         new_music.music_name = dict['music_name']
         new_music.music_word = dict['music_word']
-        new_music.music_url = dict['music_id']
+        new_music.music_id = dict['music_id']
         new_music.singer = dict['singer']
         new_music.save()
 

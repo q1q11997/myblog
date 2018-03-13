@@ -56,6 +56,26 @@ def blog_each(request,blog_id):
     previous_blog = Blog.objects.filter(created_time__gt=blog.created_time).last()
     next_blog = Blog.objects.filter(created_time__lt=blog.created_time).first()
 
+
+    #右边的面板/博客分类需要的数据
+    blog_types = BlogType.objects.all()
+    blog_types_list = []
+
+    for blog_type in blog_types:
+        blog_type.blog_count_by_type = Blog.objects.filter(blog_type=blog_type).count()
+        blog_types_list.append(blog_type)
+
+    # 右边的面板/时间归档需要的数据
+    blog_dates = Blog.objects.dates('created_time', 'month', order='DESC')  # 取所有发布过Blog的月份 返回Y:m
+    blog_dates_dict = {}
+
+    for blog_date in blog_dates:
+        blog_count_by_date = Blog.objects.filter(created_time__year=blog_date.year,
+                                                 created_time__month=blog_date.month).count()
+        blog_dates_dict[blog_date] = blog_count_by_date
+
+
+
     if not request.COOKIES.get('blog_%s_read' % blog.id):  #cookie中没有访问记录
         blog.read_num +=1
         blog.save()

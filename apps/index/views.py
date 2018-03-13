@@ -5,10 +5,19 @@ from apps.blog.models import Blog
 from django.db.models import Q
 from apps.index.models import Music
 from apps.index.spiders.getbiying import Get_biying
-from apps.index.spiders.getmusic import Get_music
 
 
 def index(request):
+    bg = Get_biying()
+    music_num = Music.objects.all().count()
+    num =random.randint(1,music_num)
+    music = Music.objects.get(id=num)
+    url_photo = bg.get_one_photo()
+    request.session['url_photo'] = url_photo
+    request.session['music_id'] = music.music_id
+    request.session['music_name'] = music.music_name
+    request.session['singer'] = music.singer
+    request.session['music_word'] = music.music_word
     return render(request,'index.html',locals())
 
 
@@ -21,22 +30,10 @@ def search(request):
             return  render_to_response('index.html')
         else:
             #筛选包含关键字的blog(title or content)
-            blog = Blog.objects.filter(Q(title__icontains=q)|Q(content__icontains=q))
-            return render_to_response('search_results.html', {'blogs': blog, 'query': q})
+            blogs = Blog.objects.filter(Q(title__icontains=q)|Q(content__icontains=q))
+            return render_to_response('search_results.html', {'blogs': blogs, 'query': q})
     return render_to_response('search_results.html', {'error': error})
 
 
-def new_index(request):
-    bg = Get_biying()
-    music_num = Music.objects.all().count()
-    num =random.randint(1,music_num)
-    music = Music.objects.get(id=num)
-    url_photo = bg.get_one_photo()
-    request.session['url_photo'] = url_photo
-    request.session['music_id'] = music.music_url
-    request.session['music_name'] = music.music_name
-    request.session['singer'] = music.singer
-    request.session['music_word'] = music.music_word
-    return render(request,'new_index.html')
 def Carousel(request):
     return render(request,'Carousel.html')
