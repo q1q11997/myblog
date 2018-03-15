@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}博客总览-lyz's blog{% endblock %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/blog_list.css' %}" rel="stylesheet"/>{% endblock %}
+
 {% block content %}
 
     <div class="container">
@@ -12,22 +15,40 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        {% for blog in page_of_blogs.object_list %}
-                            <a href="{% url 'blog_each' blog.id %}"><h2>{{ blog.title }}</h2></a>
-                            <p>作者：{{ blog.author }}</p>
-                            <p>类型:<a href="{% url 'blog_type' blog.blog_type_id %}"> {{ blog.blog_type }}</a></p>
-                            <br>
-                            {{ blog.content|truncatechars:300|striptags|safe}}
-                            <br><br>
-                            <p>发表日期:{{ blog.created_time }}</p>
-                            <p>阅读 ({{ blog.read_num }})</p>
-                            <hr>
-                        {% empty %}
-                            <p>-- 暂无博客，敬请期待 --</p>
-                        {% endfor %}
-                        <hr>
+                        <p>
+                            等待Coding
+                            等待Coding
+                            等待Coding
+                            等待Coding
+                            等待Coding
+                            等待Coding
+                            等待Coding
+                        </p>
                     </div>
                 </div>
+                <br>
+                <br>
+                {% for blog in page_of_blogs.object_list %}
+                    <li class="list-group-item">
+                        <a class="title" href="{% url 'blog_each' blog.id %}">{{ blog.title }}</a>
+                        <p class="content">{{ blog.content|truncatechars:300|striptags|safe}}</p>
+
+                        <p class="blog_detail">
+                            <span class="blog_type"><a href="{% url 'blog_type' blog.blog_type_id %}"> {{ blog.blog_type }}</a></span>
+                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                            <span class="blog_time">{{ blog.created_time|date:'Y年m月d日 H:i' }}</span>
+                            <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                            <span class="blog_read">阅读({{ blog.read_num }})</span>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <span class="blog_author">{{ blog.author }}</span>
+
+                        </p>
+                    </li>
+                {% empty %}
+                    <p>-- 暂无博客，敬请期待 --</p>
+                {% endfor %}
+
+
 
                 <div style="text-align: center">
                     <nav aria-label="Page navigation">
@@ -78,12 +99,15 @@
                         <h3 class="panel-title">博客分类</h3>
                     </div>
                     <div class="panel-body">
-                        <ul>
+                        <ul class="sort">
                             {% for blog_type in blog_types %}
-                                <li>
+                                <li class="tag_name">
                                     <a href="{% url 'blog_type' blog_type.id %}">
-                                        {{ blog_type.type_name }}({{ blog_type.blog_count_by_type}})
+                                        {{ blog_type.type_name }}
                                     </a>
+                                    <span>
+                                        {{ blog_type.blog_count_by_type}}篇
+                                    </span>
                                 </li>
                             {% empty %}
                                 <li>暂无分类</li>
@@ -96,9 +120,16 @@
                         <h3 class="panel-title">日期归档</h3>
                     </div>
                     <div class="panel-body">
-                        <ul>
+                        <ul class="sort">
                             {% for blog_date,blog_count in blog_dates_dict.items %}
-                                <li><a href="{% url 'blog_by_date' blog_date.year blog_date.month %}">{{ blog_date|date:'Y年m月'}}({{ blog_count }})</a></li>
+                                <li class="tag_name">
+                                    <a href="{% url 'blog_by_date' blog_date.year blog_date.month %}">
+                                        {{ blog_date|date:'Y年m月'}}</a>
+
+                                    <span>
+                                        {{ blog_count }}篇
+                                    </span>
+                                </li>
                             {% empty %}
                                 <li>暂无</li>
                             {% endfor %}

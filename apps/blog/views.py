@@ -29,8 +29,8 @@ def blog_list(request):
     #类型分类博客数量统计
     blog_types_list = []
 
-    for blog_type in blog_types:
-        blog_type.blog_count_by_type = Blog.objects.filter(blog_type =blog_type).count()
+    for type in blog_types:
+        type.blog_count_by_type = Blog.objects.filter(blog_type =type).count()
         blog_types_list.append(blog_type)
 
     #日期分类博客数量统计
@@ -61,8 +61,8 @@ def blog_each(request,blog_id):
     blog_types = BlogType.objects.all()
     blog_types_list = []
 
-    for blog_type in blog_types:
-        blog_type.blog_count_by_type = Blog.objects.filter(blog_type=blog_type).count()
+    for type in blog_types:
+        type.blog_count_by_type = Blog.objects.filter(blog_type =type).count()
         blog_types_list.append(blog_type)
 
     # 右边的面板/时间归档需要的数据
@@ -94,8 +94,8 @@ def blog_type(request,blog_type_id):
     #类型分类博客数量统计
     blog_types_list = []
 
-    for blog_type in blog_types:
-        blog_type.blog_count_by_type = Blog.objects.filter(blog_type =blog_type).count()
+    for type in blog_types:
+        type.blog_count_by_type = Blog.objects.filter(blog_type =type).count()
         blog_types_list.append(blog_type)
 
     #日期分类博客数量统计
@@ -126,8 +126,8 @@ def blog_by_date(request,year,month):
     #类型分类博客数量统计
     blog_types_list = []
 
-    for blog_type in blog_types:
-        blog_type.blog_count_by_type = Blog.objects.filter(blog_type =blog_type).count()
+    for type in blog_types:
+        type.blog_count_by_type = Blog.objects.filter(blog_type =type).count()
         blog_types_list.append(blog_type)
 
     #日期分类博客数量统计
