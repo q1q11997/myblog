@@ -58,18 +58,21 @@
                 </div>
             </div>
 
-            <div class="col-xs-3">
+            <div class="col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">博客分类</h3>
                     </div>
                     <div class="panel-body">
-                        <ul>
+                        <ul class="sort">
                             {% for blog_type in blog_types %}
-                                <li>
+                                <li class="tag_name">
                                     <a href="{% url 'blog_type' blog_type.id %}">
-                                        {{ blog_type.type_name }}({{ blog_type.blog_count_by_type}})
+                                        {{ blog_type.type_name }}
                                     </a>
+                                    <span>
+                                        {{ blog_type.blog_count_by_type}}篇
+                                    </span>
                                 </li>
                             {% empty %}
                                 <li>暂无分类</li>
@@ -82,9 +85,16 @@
                         <h3 class="panel-title">日期归档</h3>
                     </div>
                     <div class="panel-body">
-                        <ul>
+                        <ul class="sort">
                             {% for blog_date,blog_count in blog_dates_dict.items %}
-                                <li><a href="{% url 'blog_by_date' blog_date.year blog_date.month %}">{{ blog_date|date:'Y年m月'}}({{ blog_count }})</a></li>
+                                <li class="tag_name">
+                                    <a href="{% url 'blog_by_date' blog_date.year blog_date.month %}">
+                                        {{ blog_date|date:'Y年m月'}}</a>
+
+                                    <span>
+                                        {{ blog_count }}篇
+                                    </span>
+                                </li>
                             {% empty %}
                                 <li>暂无</li>
                             {% endfor %}

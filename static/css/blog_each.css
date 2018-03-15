@@ -16,3 +16,27 @@ div.panel-heading ul li{
 div.panel-body ul{
     list-style-type: none;
 }
+
+h3.panel-title{
+    font-size: 16px;
+    line-height: 16px;
+    padding-left: 6px;
+    border-left: 3px solid #cf2730;
+    color: #333;
+}
+
+ul.sort{
+    list-style: none;
+    padding: unset;
+    margin: 5px;
+}
+
+ul.sort li.tag_name a{
+    text-decoration: none;
+    color:gray;
+}
+
+ul.sort li.tag_name span{
+    float: right;
+    color: #BBBBBB;
+}

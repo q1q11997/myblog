@@ -1,7 +1,7 @@
 from numpy import random
 from django.shortcuts import render
 from django.shortcuts import render_to_response
-from apps.blog.models import Blog
+from apps.blog.models import Blog,BlogType
 from django.db.models import Q
 from apps.index.models import Music
 from apps.index.spiders.getbiying import Get_biying
@@ -18,6 +18,8 @@ def index(request):
     request.session['music_name'] = music.music_name
     request.session['singer'] = music.singer
     request.session['music_word'] = music.music_word
+
+    blog_types = BlogType.objects.all()
     return render(request,'index.html',locals())
 
 
