@@ -53,26 +53,18 @@ def blog_list(request):
 #显示单个博客视图，取创建时间最接近的前后博客，阅读数+1操作 返回 blog,previous_blog,next_blog
 def blog_each(request,blog_id):
     blog = get_object_or_404(Blog,id=blog_id)
+    blog_types = BlogType.objects.all()
     previous_blog = Blog.objects.filter(created_time__gt=blog.created_time).last()
     next_blog = Blog.objects.filter(created_time__lt=blog.created_time).first()
 
 
-    #右边的面板/博客分类需要的数据
-    blog_types = BlogType.objects.all()
-    blog_types_list = []
+    #右边的面板/最热博客需要的数据
 
-    for type in blog_types:
-        type.blog_count_by_type = Blog.objects.filter(blog_type =type).count()
-        blog_types_list.append(blog_type)
+    hot_blogs = Blog.objects.all().order_by('-read_num')[:5]
 
-    # 右边的面板/时间归档需要的数据
-    blog_dates = Blog.objects.dates('created_time', 'month', order='DESC')  # 取所有发布过Blog的月份 返回Y:m
-    blog_dates_dict = {}
 
-    for blog_date in blog_dates:
-        blog_count_by_date = Blog.objects.filter(created_time__year=blog_date.year,
-                                                 created_time__month=blog_date.month).count()
-        blog_dates_dict[blog_date] = blog_count_by_date
+    # 右边的面板/最新博客需要的数据
+    new_blogs =Blog.objects.all().order_by('-created_time')[:5]
 
 
 

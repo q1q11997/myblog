@@ -1,3 +1,4 @@
+
 h1.panel-title{
     font-size: 24px;
     color: #0d56a6;
@@ -25,18 +26,19 @@ h3.panel-title{
     color: #333;
 }
 
-ul.sort{
+ul.out_blog{
     list-style: none;
     padding: unset;
     margin: 5px;
 }
 
-ul.sort li.tag_name a{
+ul.out_blog li.tag_name a{
+    font-size: 15px;
     text-decoration: none;
     color:gray;
 }
 
-ul.sort li.tag_name span{
-    float: right;
+ul.out_blog li.tag_name span{
+    font-size: 11px;
     color: #BBBBBB;
 }

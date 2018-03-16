@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% block title %}{{ blog.title }}-lyz's blog{% endblock %}
 {% block css %}<link href="{% static 'css/blog_each.css' %}" rel="stylesheet"/>{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -61,18 +62,20 @@
             <div class="col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">博客分类</h3>
+                        <h3 class="panel-title">热门博客</h3>
                     </div>
                     <div class="panel-body">
-                        <ul class="sort">
-                            {% for blog_type in blog_types %}
+                        <ul class="out_blog">
+                            {% for hot_blog in hot_blogs %}
                                 <li class="tag_name">
-                                    <a href="{% url 'blog_type' blog_type.id %}">
-                                        {{ blog_type.type_name }}
+                                    <a href="{% url 'blog_each' hot_blog.id %}">
+                                        {{ hot_blog.title }}
                                     </a>
-                                    <span>
-                                        {{ blog_type.blog_count_by_type}}篇
-                                    </span>
+                                    <p>
+                                        <span class="glyphicon glyphicon-bookmark" aria-hidden="true">
+                                            {{ hot_blog.read_num }}
+                                        </span>
+                                    </p>
                                 </li>
                             {% empty %}
                                 <li>暂无分类</li>
@@ -82,18 +85,22 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">日期归档</h3>
+                        <h3 class="panel-title">最新发布</h3>
                     </div>
                     <div class="panel-body">
-                        <ul class="sort">
-                            {% for blog_date,blog_count in blog_dates_dict.items %}
+                        <ul class="out_blog">
+                            {% for new_blog in new_blogs %}
                                 <li class="tag_name">
-                                    <a href="{% url 'blog_by_date' blog_date.year blog_date.month %}">
-                                        {{ blog_date|date:'Y年m月'}}</a>
+                                    <a href="{% url 'blog_each' new_blog.id %}">
+                                        {{ new_blog.title}}
+                                    </a>
+                                    <div>
+                                        <span class="glyphicon glyphicon-book" aria-hidden="true">
+                                            {{ new_blog.read_num }}
+                                        </span>
+                                    </div>
 
-                                    <span>
-                                        {{ blog_count }}篇
-                                    </span>
+
                                 </li>
                             {% empty %}
                                 <li>暂无</li>
