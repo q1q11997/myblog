@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block title %}留言总览-lyz's blog{% endblock %}
+{% load staticfiles %}
+{% block css %}<link href="{% static 'css/leave_view.css' %}" rel="stylesheet"/>{% endblock %}
+
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-1">
+
+            </div>
+
+            <div class="col-lg-10">
+                <div class="list-group">
+                    <span class="list-group-item">留言列表</span>
+
+                    <ul class="list-group">
+                        {% for leave_msg in page_of_blogs.object_list %}
+                            <li class="list-group-item">
+                                <div class="leave-word">
+                                    <div class="user-inf">
+                                        <img src="/media/{{ leave_msg.user.icon }}" alt="用户头像">
+                                        <span class="user-name">{{ leave_msg.user.name }}</span>
+                                    </div>
+
+                                    <div class="message">
+                                        <p class="content">{{ leave_msg.msg|truncatechars:150|striptags|safe}}
+                                        </p>
+                                        <p class="time">发布于{{ leave_msg.time }}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        {% empty %}
+                            <p>-- 暂无评论，敬请期待 --</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div style="text-align: center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                {% if page_of_blogs.has_previous %}
+                                    <a href="?page={{ page_of_blogs.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                {% else%}
+                                    <span aria-hidden="true">&laquo;</span>
+                                {% endif %}
+
+                            </li>
+
+                            {% for page_num in page_range %}
+
+                                {% if page_num == page_of_blogs.number %}
+                                    <li class="active"><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                                {% else %}
+                                    {% if page_num == '...' %}
+                                        <li><span>{{ page_num }}</span></li>
+                                    {% else %}
+                                        <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                                    {% endif %}
+                                {% endif %}
+
+                            {% endfor %}
+
+                            <li>
+                                {% if page_of_blogs.has_next %}
+                                    <a href="?page={{ page_of_blogs.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                {% else%}
+                                    <span aria-hidden="true">&raquo;</span>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+
+            <div class="col-lg-1">
+
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-10">
+
+
+                    <form action="{% url 'leave_view' %}" method="post">
+                        {% if warning %}
+                            <div class="alert alert-warning">{{ warning }}</div>
+                        {% endif %}
+
+                        {% csrf_token %}
+
+                        <h2 class="text-center">欢迎留言</h2>
+
+                        <div class="form-group">
+                            {{ leavemsg_form.msg.label_tag }}
+                            {{ leavemsg_form.msg }}
+                        </div>
+
+                        <button type="reset" class="btn btn-default pull-left">重置</button>
+                        <button type="submit" class="btn btn-primary pull-right">提交</button>
+                    </form>
+            </div>
+            <div class="col-lg-1">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

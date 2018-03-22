@@ -1,0 +1,33 @@
+.list-group-item img{
+    border-radius:180%;
+    width: 80px;
+    height: 80px;
+}
+div.user-inf{
+    width: 80px;
+}
+
+li.list-group-item div.user-inf span.user-name{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+li.list-group-item div.message p.content{
+    text-indent: 2em;
+    position: absolute;
+    top:15%;
+    left:15%;
+    font-size: 18px;
+    font-family: "微软雅黑";
+}
+
+li.list-group-item div.message p.time{
+    position: absolute;
+    top:85%;
+    left:80%;
+    font-size:12px;
+    font-family: "微软雅黑";
+    color:black;
+    font-weight:bold;
+}

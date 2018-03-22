@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'apps.comment',
     'apps.login',
     'apps.index',
+    'apps.leavemsg',
     'ckeditor',
     'ckeditor_uploader',
     

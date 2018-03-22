@@ -38,7 +38,7 @@ def register(request):
         # 登录状态不允许注册。你可以修改这条原则！
         return redirect("/index")
     if request.method == "POST":
-        register_form = forms.RegisterForm(request.POST)
+        register_form = forms.RegisterForm(request.POST,request.FILES)
         message = "请检查填写的内容！"
         if register_form.is_valid():  # 获取数据
             username = register_form.cleaned_data['username']
@@ -46,6 +46,7 @@ def register(request):
             password2 = register_form.cleaned_data['password2']
             email = register_form.cleaned_data['email']
             sex = register_form.cleaned_data['sex']
+            icon = register_form.cleaned_data['icon']
             if password1 != password2:  # 判断两次密码是否相同
                 message = "两次输入的密码不同！"
                 return render(request, 'register.html', locals())
@@ -66,6 +67,7 @@ def register(request):
                 new_user.password = password1
                 new_user.email = email
                 new_user.sex = sex
+                new_user.icon = icon
                 new_user.save()
                 return redirect('login')  # 自动跳转到登录页面
     register_form = forms.RegisterForm()
