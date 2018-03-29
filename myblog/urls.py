@@ -23,7 +23,8 @@ urlpatterns = [
     path('login/',include('apps.login.urls')),
     path('blog/',include('apps.blog.urls')),
     path('ckeditor/',include('ckeditor_uploader.urls')),
-    path('leavemsg/',include('apps.leavemsg.urls'))
+    path('leavemsg/',include('apps.leavemsg.urls')),
+    path('comment/',include('apps.comment.urls'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root =settings.MEDIA_ROOT)

@@ -32,31 +32,113 @@
                                 阅读量({{ blog.read_num }})
                             </li>
                         </ul>
-
-
                     </div>
+
                     <div class="panel-body">
 
                         <div class="blog-content">{{ blog.content|safe}}</div>
 
                     </div>
-                    <div class="panel-footer"><div class="blog-more">
-                        <p>上一篇：
-                            {% if previous_blog %}
-                                <a href="{% url 'blog_each' previous_blog.id %}">{{ previous_blog }}</a>
-                            {% else %}
-                                没有了
-                            {% endif %}
-                        </p>
-                        <p>下一篇：
-                            {% if next_blog %}
-                                <a href="{% url 'blog_each' next_blog.id %}">{{ next_blog }}</a>
-                            {% else %}
-                                没有了
-                            {% endif %}
-                        </p>
-                    </div></div>
+
+                    <div class="panel-footer">
+                        <div class="blog-more">
+                            <p>上一篇：
+                                {% if previous_blog %}
+                                    <a href="{% url 'blog_each' previous_blog.id %}">{{ previous_blog }}</a>
+                                {% else %}
+                                    没有了
+                                {% endif %}
+                            </p>
+                            <p>下一篇：
+                                {% if next_blog %}
+                                    <a href="{% url 'blog_each' next_blog.id %}">{{ next_blog }}</a>
+                                {% else %}
+                                    没有了
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">评论列表</h3>
+                    </div>
+
+                    <div class="panel-body" style="padding: 0">
+                        <div class="comment-list">
+                                {% for comment in comments|slice:":5" %}
+                                    <div class="comment">
+                                        <div class="comment-user-inf">
+                                            <div class="comment-user-icon"><img src="/media/{{ comment.user.icon }}" alt="用户头像"></div>
+                                            <div class="comment-user-name"><a>{{ comment.user.name }}</a></div>
+                                            <div class="comment-time">{{ comment.comment_time|date:"Y年m月d日 H:i" }}</div>
+                                        </div>
+                                        <div class="comment-text">
+                                            {{ comment.comment_text|truncatechars:300|safe }}
+                                            {{ comment.agree }}
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <p class="comment-empty"><！------------ 暂无留言 ------------！></p>
+                                {% endfor %}
+
+                        </div>
+                    {% if comments.count > 5 %}
+                        <div class="btn-class-comment">
+                            <span class="btn-comment-down">展开<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></span>
+                        </div>
+                        <div class="rest_out_comment">
+                            <div class="rest_out_comment">
+                                {% for comment in comments|slice:"5:" %}
+                                    <div class="comment">
+                                        <div class="comment-user-inf">
+                                            <div class="comment-user-icon"><img src="/media/{{ comment.user.icon }}" alt="用户头像"></div>
+                                            <div class="comment-user-name"><a>{{ comment.user.name }}</a></div>
+                                            <div class="comment-time">{{ comment.comment_time|date:"Y年m月d日 H:i" }}</div>
+                                        </div>
+                                        <div class="comment-text">
+                                            {{ comment.comment_text|truncatechars:300|safe }}
+                                            {{ comment.agree }}
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <p class="comment-empty"><！------------ 暂无留言 ------------！></p>
+                                {% endfor %}
+                            </div>
+                            <div class="btn-class-comment">
+                                <span class="btn-comment-up">收起<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></span>
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">发表评论</h3>
+                    </div>
+
+                    <div class="comment-post">
+                        {% if request.session.is_login %}
+                            <form action="{% url 'post_comment' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group-lg">
+                                    <input type="hidden" name="object_id" value="{{ blog.id }}">
+                                    <input type="hidden" name="content_type" value="blog">
+                                    <textarea name="text" id="commit_text" class="form-control" rows="8" placeholder="欢迎评论!"></textarea>
+                                    <input type="submit" value="评论" class="button btn-primary pull-right">
+                                </div>
+
+                            </form>
+                        {% else %}
+                            <p class="comment-empty"><！------------ 还未登录? 点击<a href="{% url 'login' %}">这里</a>------------！></p>
+                        {% endif %}
+                    </div>
+                </div>
+
             </div>
 
             <div class="col-md-3">
@@ -66,7 +148,7 @@
                     </div>
                     <div class="panel-body">
                         <ul class="out_blog">
-                            {% for hot_blog in hot_blogs %}
+                            {% for hot_blog in hot_blogs|slice:":5" %}
                                 <li class="tag_name">
                                     <a href="{% url 'blog_each' hot_blog.id %}">
                                         {{ hot_blog.title }}
@@ -77,22 +159,36 @@
                                         </span>
                                     </p>
                                 </li>
+
                             {% empty %}
                                 <li>暂无分类</li>
                             {% endfor %}
-                            <!--
-                                {% if blog_types.count > 5 %}
-                                <a class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    展开
-                                </a>
-                                <div class="collapse" id="collapseExample">
-                                    <div class="well">
-                                        ...
-                                    </div>
-                                </div>
-                                {% endif %}
-                            -->
                         </ul>
+                        <div class="btn-class">
+                            <span class="btn-hot-down">展开<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></span>
+                        </div>
+                        <div class="rest_out_hot_blog">
+                            <ul class="rest_out_blog">
+                                {% for rest_hot_blog in hot_blogs|slice:"5:" %}
+                                    <li class="tag_name">
+                                        <a href="{% url 'blog_each' rest_hot_blog.id %}">
+                                            {{ rest_hot_blog.title }}
+                                        </a>
+                                        <p>
+                                            <span class="glyphicon glyphicon-bookmark" aria-hidden="true">
+                                                {{ rest_hot_blog.read_num }}
+                                            </span>
+                                        </p>
+                                    </li>
+                                {% empty %}
+
+                                {% endfor %}
+                            </ul>
+                            <div class="btn-class">
+                                <span class="btn-hot-up">收起<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -101,27 +197,104 @@
                     </div>
                     <div class="panel-body">
                         <ul class="out_blog">
-                            {% for new_blog in new_blogs %}
+                            {% for new_blog in new_blogs|slice:":5" %}
                                 <li class="tag_name">
                                     <a href="{% url 'blog_each' new_blog.id %}">
-                                        {{ new_blog.title}}
+                                        {{ new_blog.title }}
                                     </a>
-                                    <div>
-                                        <span class="glyphicon glyphicon-book" aria-hidden="true">
+                                    <p>
+                                        <span class="glyphicon glyphicon-bookmark" aria-hidden="true">
                                             {{ new_blog.read_num }}
                                         </span>
-                                    </div>
-
-
+                                    </p>
                                 </li>
+
                             {% empty %}
-                                <li>暂无</li>
+                                <li>暂无分类</li>
                             {% endfor %}
                         </ul>
+                        <div class="btn-class">
+                            <span class="btn-new-down" >展开<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></span>
+                        </div>
+                        <div class="rest_out_new_blog">
+                            <ul class="rest_out_blog">
+                                {% for rest_new_blog in new_blogs|slice:"5:" %}
+                                    <li class="tag_name">
+                                        <a href="{% url 'blog_each' rest_new_blog.id %}">
+                                            {{ rest_new_blog.title }}
+                                        </a>
+                                        <p>
+                                            <span class="glyphicon glyphicon-bookmark" aria-hidden="true">
+                                                {{ rest_new_blog.read_num }}
+                                            </span>
+                                        </p>
+                                    </li>
+                                {% empty %}
+
+                                {% endfor %}
+                            </ul>
+                            <div class="btn-class">
+                                <span class="btn-new-up">收起<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
+        </div>
+
+    </div>
+    <script>
+        var btn_hot_up = $('.btn-hot-up');
+        var btn_hot_down = $('.btn-hot-down');
+        var btn_new_up = $('.btn-new-up');
+        var btn_new_down = $('.btn-new-down');
+
+        var btn_comment_up = $('.btn-comment-up');
+        var btn_comment_down = $('.btn-comment-down');
+
+
+        var blog_new = $('.rest_out_new_blog');
+        var blog_hot = $('.rest_out_hot_blog');
+        var comment_rest =$('.rest_out_comment');
+
+
+        blog_new.hide();
+        blog_hot.hide();
+        comment_rest.hide();
+
+
+
+        btn_hot_up.click(function () {
+            blog_hot.slideUp(10);
+            btn_hot_down.show(10);
+        });
+
+        btn_hot_down.click(function () {
+            blog_hot.slideDown(10);
+            btn_hot_down.hide(10);
+        });
+
+        btn_new_up.click(function () {
+            blog_new.slideUp(10);
+            btn_new_down.show(10);
+        });
+
+        btn_new_down.click(function () {
+            blog_new.slideDown(10);
+            btn_new_down.hide(10);
+        });
+
+        btn_comment_up.click(function () {
+            comment_rest.slideUp(10);
+            btn_comment_down.show(10);
+        });
+
+        btn_comment_down.click(function () {
+            comment_rest.slideDown(10);
+            btn_comment_down.hide(10);
+        });
+
+    </script>
 {% endblock %}

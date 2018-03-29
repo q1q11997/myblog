@@ -100,7 +100,7 @@
                     </div>
                     <div class="panel-body">
                         <ul class="sort">
-                            {% for blog_type in blog_types %}
+                            {% for blog_type in blog_types|slice:":5" %}
                                 <li class="tag_name">
                                     <a href="{% url 'blog_type' blog_type.id %}">
                                         {{ blog_type.type_name }}
@@ -113,6 +113,34 @@
                                 <li>暂无分类</li>
                             {% endfor %}
                         </ul>
+                        {% if blog_types.count > 5 %}
+                            <div class="btn-class">
+                                <span class="btn-type-down">展开<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></span>
+                            </div>
+                            <div class="rest_show_blog_type">
+                                <ul class="sort">
+
+                                    {% for blog_type in blog_types|slice:"5:" %}
+                                        <li class="tag_name">
+                                            <a href="{% url 'blog_type' blog_type.id %}">
+                                                {{ blog_type.type_name }}
+                                            </a>
+                                            <span>
+                                            {{ blog_type.blog_count_by_type}}篇
+                                        </span>
+                                        </li>
+                                    {% empty %}
+                                        <li>暂无分类</li>
+                                    {% endfor %}
+
+
+                                </ul>
+                                <div class="btn-class">
+                                    <span class="btn-type-up">收起<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                        {% endif %}
+
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -121,7 +149,7 @@
                     </div>
                     <div class="panel-body">
                         <ul class="sort">
-                            {% for blog_date,blog_count in blog_dates_dict.items %}
+                            {% for blog_date,blog_count in blog_dates_dict.items|slice:":5" %}
                                 <li class="tag_name">
                                     <a href="{% url 'blog_by_date' blog_date.year blog_date.month %}">
                                         {{ blog_date|date:'Y年m月'}}</a>
@@ -133,10 +161,70 @@
                             {% empty %}
                                 <li>暂无</li>
                             {% endfor %}
+
+                            {% if blog_date.count > 5 %}
+                                <div class="btn-class">
+                                    <span class="btn-type-down">展开<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></span>
+                                </div>
+                                <div class="rest_show_blog_type">
+                                    <ul class="sort">
+                                        {% for blog_date,blog_count in blog_dates_dict.items|slice:":5" %}
+                                            <li class="tag_name">
+                                                <a href="{% url 'blog_by_date' blog_date.year blog_date.month %}">
+                                                    {{ blog_date|date:'Y年m月'}}</a>
+
+                                                <span>
+                                        {{ blog_count }}篇
+                                    </span>
+                                            </li>
+                                        {% empty %}
+                                            <li>暂无</li>
+                                        {% endfor %}
+
+
+                                    </ul>
+                                    <div class="btn-class">
+                                        <span class="btn-type-up">收起<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></span>
+                                    </div>
+                                </div>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        var btn_type_up = $('.btn-type-up');
+        var btn_type_down = $('.btn-type-down');
+        var btn_time_up = $('.btn-time-up');
+        var btn_time_down = $('.btn-time-down');
+
+
+        var blog_type = $('.rest_show_blog_type');
+        var blog_time = $('.rest_show_blog_time');
+
+        blog_type.hide();
+        blog_time.hide();
+
+        btn_type_up.click(function () {
+            blog_type.slideUp(10);
+            btn_type_down.show(10);
+        });
+
+        btn_type_down.click(function () {
+            blog_type.slideDown(10);
+            btn_type_down.hide(10);
+        });
+
+        btn_time_up.click(function () {
+            blog_time.slideUp(10);
+            btn_time_down.show(10);
+        });
+
+        btn_time_down.click(function () {
+            blog_time.slideDown(10);
+            btn_time_down.hide(10);
+        });
+    </script>
 {% endblock %}

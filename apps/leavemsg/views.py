@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from apps.leavemsg import forms
 
-
 from .models import *
 from apps.blog.models import BlogType
 # Create your views here.
@@ -35,13 +34,13 @@ def leave_view(request):
     current_page_num = page_of_blogs.number
 
     page_range = set_page_range(current_page_num,paginator)
+
     if request.method == 'POST':
         leavemsg_form = forms.LeaveMsgForm(request.POST)
         warning = "留言成功!"
 
         if leavemsg_form.is_valid():
             msg = leavemsg_form.cleaned_data['msg']
-
             if msg == None:
                 warning = '留言内容不能为空!'
                 return render(request,'leave_view.html',locals())

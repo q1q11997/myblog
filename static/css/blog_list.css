@@ -23,6 +23,7 @@ ul.sort{
     margin: 5px;
 }
 
+
 ul.sort li.tag_name a{
     text-decoration: none;
     color:gray;
@@ -60,6 +61,12 @@ p.blog_detail span.blog_read{
 
 p.blog_detail span.blog_author{
 
+}
+
+div.btn-class{
+    text-align: center;
+    font-size: 12px;
+    color: blue;
 }
 
 

@@ -1,6 +1,9 @@
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator
 from apps.blog.models import Blog,BlogType
+from apps.comment.models import Comment
+from apps.login.models import User
 
 BLOG_NUM_EACH_PAGINATOR  = 7  #设置每页的blog数量
 
@@ -60,17 +63,22 @@ def blog_each(request,blog_id):
 
     #右边的面板/最热博客需要的数据
 
-    hot_blogs = Blog.objects.all().order_by('-read_num')[:5]
+    hot_blogs = Blog.objects.all().order_by('-read_num')
 
 
     # 右边的面板/最新博客需要的数据
-    new_blogs =Blog.objects.all().order_by('-created_time')[:5]
+    new_blogs =Blog.objects.all().order_by('-created_time')
 
 
 
     if not request.COOKIES.get('blog_%s_read' % blog.id):  #cookie中没有访问记录
         blog.read_num +=1
         blog.save()
+
+    user = User.objects.get(id=request.session.get('user_id',9999)) # id=9999为游客
+
+    blog_content_type = ContentType.objects.get_for_model(blog)
+    comments = Comment.objects.filter(content_type=blog_content_type,object_id=blog.id).order_by('-comment_time')
 
     response = render(request,'blog_each.html',locals())
     response.set_cookie('blog_%s_read' % blog.id ,'true')

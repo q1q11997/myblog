@@ -13,4 +13,4 @@ class RegisterForm(forms.Form):
     password2 = forms.CharField(label="确认密码", max_length=256, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     email = forms.EmailField(label="邮箱地址", widget=forms.EmailInput(attrs={'class': 'form-control'}))
     sex = forms.ChoiceField(label='性别', choices=gender)
-    icon = forms.ImageField(label="头像",widget=forms.ClearableFileInput(attrs={'class':'form-control'}))
+    icon = forms.ImageField(label="头像",widget=forms.ClearableFileInput(attrs={'class':'form-control','placeholder':'请上传小于5M的jpg图片'}))
