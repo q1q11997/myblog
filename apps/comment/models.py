@@ -6,8 +6,8 @@ from apps.login.models import User
 class Comment(models.Model):
     content_type = models.ForeignKey(ContentType,on_delete=models.DO_NOTHING)
     object_id = models.PositiveIntegerField()
-
     content_object = GenericForeignKey('content_type','object_id')
+
     user = models.ForeignKey(User,max_length=20,on_delete=models.DO_NOTHING,verbose_name='评论用户')
     comment_text = models.TextField(verbose_name='评论')
     comment_time = models.DateTimeField(auto_now_add=True,verbose_name='评论时间')

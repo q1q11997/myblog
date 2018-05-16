@@ -62,14 +62,14 @@ def register(request):
 
                 # 当一切都OK的情况下，创建新用户
 
-                new_user = models.User.objects.create()
-                new_user.name = username
-                new_user.password = password1
-                new_user.email = email
-                new_user.sex = sex
-                new_user.icon = icon
-                new_user.save()
-                return redirect('login')  # 自动跳转到登录页面
+            new_user = models.User.objects.create()
+            new_user.name = username
+            new_user.password = password1
+            new_user.email = email
+            new_user.sex = sex
+            new_user.icon = icon
+            new_user.save()
+            return redirect('login')  # 自动跳转到登录页面
     register_form = forms.RegisterForm()
     return render(request, 'register.html', locals())
 

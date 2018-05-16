@@ -1,3 +1,4 @@
+import markdown
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator
@@ -56,6 +57,12 @@ def blog_list(request):
 #显示单个博客视图，取创建时间最接近的前后博客，阅读数+1操作 返回 blog,previous_blog,next_blog
 def blog_each(request,blog_id):
     blog = get_object_or_404(Blog,id=blog_id)
+    blog.content = markdown.markdown(blog.content,
+                                     extensions=[
+                                         'markdown.extensions.extra',
+                                         'markdown.extensions.codehilite',
+                                         'markdown.extensions.toc',
+                                     ])
     blog_types = BlogType.objects.all()
     previous_blog = Blog.objects.filter(created_time__gt=blog.created_time).last()
     next_blog = Blog.objects.filter(created_time__lt=blog.created_time).first()

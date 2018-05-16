@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'apps.login',
     'apps.index',
     'apps.leavemsg',
+    'apps.space',
     'ckeditor',
     'ckeditor_uploader',
     
@@ -53,7 +54,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+
 
 ROOT_URLCONF = 'myblog.urls'
 
@@ -97,7 +100,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'myblog',
         'USER': 'root',
-        'PASSWORD': '123456',
+        'PASSWORD': 'asd123456',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }

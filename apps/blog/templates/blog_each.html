@@ -75,7 +75,7 @@
                                             <div class="comment-time">{{ comment.comment_time|date:"Y年m月d日 H:i" }}</div>
                                         </div>
                                         <div class="comment-text">
-                                            {{ comment.comment_text|truncatechars:300|safe }}
+                                            {{ comment.comment_text|truncatechars:200|safe }}
                                             {{ comment.agree }}
                                         </div>
                                     </div>
